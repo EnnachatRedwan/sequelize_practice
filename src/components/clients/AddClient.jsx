@@ -2,7 +2,7 @@ import { useContext, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import clientCtx from "../../../contexts/client/clientsContext";
 
-const AddClient = (props) => {
+const AddClient = () => {
   const Client = useContext(clientCtx);
   const fullNameRef = useRef();
   const emailRef = useRef();
@@ -36,8 +36,8 @@ const AddClient = (props) => {
     <tr className="bg-light">
       {isEntering ? (
         <>
-          <td>#</td>
-          <td>
+          <th></th>
+          <th>
             <form onSubmit={addClient} action="POST">
               <input
                 ref={fullNameRef}
@@ -46,8 +46,8 @@ const AddClient = (props) => {
                 placeholder="Full name"
               />
             </form>
-          </td>
-          <td>
+          </th>
+          <th>
             <form onSubmit={addClient} action="POST">
               <input
                 ref={emailRef}
@@ -56,9 +56,9 @@ const AddClient = (props) => {
                 placeholder="email"
               />
             </form>
-          </td>
-          <td></td>
-          <td className="text-center">
+          </th>
+          <th></th>
+          <th className="text-center">
             <Button
               onClick={addClient}
               variant="success"
@@ -67,19 +67,19 @@ const AddClient = (props) => {
             >
               {Client.isAddLoading ? "Loading..." : "ADD"}
             </Button>
-          </td>
-          <td className="text-center">
-            <Button onClick={closeForm} variant="outline-danger" className="">
+          </th>
+          <th className="text-center">
+            <Button onClick={closeForm} variant="danger" className="">
               Close
             </Button>
-          </td>
+          </th>
         </>
       ) : (
-        <td className="text-center" colSpan={6}>
+        <th className="text-center" colSpan={6}>
           <Button onClick={openForm} variant="success">
             ADD
           </Button>
-        </td>
+        </th>
       )}
     </tr>
   );

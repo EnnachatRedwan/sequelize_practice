@@ -8,13 +8,17 @@ function ClentsTable() {
   const Client = useContext(clientCtx);
 
   return (
-    <div className="mt-3 container-lg" style={{overflowX:'scroll',scrollbarWidth:'none'}}>
+    <div
+      className="mt-3 container-lg"
+      style={{ overflowX: "scroll", scrollbarWidth: "none" }}
+    >
       {Client.isLoading && <h1 className="text-center lead m-5">Loading...</h1>}
       {!Client.isLoading && (
         <table className="table table-striped">
           <thead>
+            <AddClient />
             {Client.clients.length > 0 && (
-              <tr>
+              <tr className="table-dark">
                 <th>#</th>
                 <th>Full name</th>
                 <th>Email</th>
@@ -29,9 +33,7 @@ function ClentsTable() {
               <ClientEntry key={i} iteration={i + 1} client={client} />
             ))}
           </tbody>
-          <tfoot>
-            <AddClient />
-          </tfoot>
+          <tfoot></tfoot>
         </table>
       )}
     </div>

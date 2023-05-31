@@ -1,11 +1,13 @@
 import { useContext, useRef, useState } from "react";
 import clientCtx from "../../../contexts/client/clientsContext";
 import { Button } from "react-bootstrap";
+import Alert from "../../portals/alert";
 
 const ClientEntry = (props) => {
   const Client = useContext(clientCtx);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
 
   const [fullName, setFullName] = useState(props.client.fullname);
   const [email, setemail] = useState(props.client.email);
@@ -25,6 +27,14 @@ const ClientEntry = (props) => {
     setIsEditing(false);
   };
 
+  const openAlert = () => {
+    setIsConfirming(true);
+  };
+
+  const closeAlert = () => {
+    setIsConfirming(false);
+  };
+
   const editClient = (event) => {
     if (event) event.preventDefault();
     if (fullName.trim() === "") return;
@@ -37,6 +47,25 @@ const ClientEntry = (props) => {
 
   return (
     <tr style={isEditing ? { backgroundColor: "#aaa" } : {}}>
+      {isConfirming && (
+        <Alert
+          close={closeAlert}
+          controls={
+            <>
+              <Button
+                variant="danger"
+                onClick={() => Client.delete(props.client.id)}
+              >
+                Okay
+              </Button>
+              <Button variant="primary" onClick={closeAlert}>
+                Cancel
+              </Button>
+            </>
+          }
+        >{`You are about to delete ${props.client.fullname}`}</Alert>
+      )}
+
       <td>{props.iteration}</td>
       <td>
         {isEditing ? (
@@ -101,10 +130,7 @@ const ClientEntry = (props) => {
             </Button>
           </td>
           <td className="text-center">
-            <Button
-              variant="danger"
-              onClick={() => Client.delete(props.client.id)}
-            >
+            <Button variant="danger" onClick={openAlert}>
               Delete
             </Button>
           </td>
