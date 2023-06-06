@@ -1,6 +1,5 @@
-import { Container } from "react-bootstrap";
-import ClientEntry from "./clientEntry";
-import { useContext, useEffect, useState } from "react";
+import ClientEntry from "./ClientEntry";
+import { useContext } from "react";
 import clientCtx from "../../../contexts/client/clientsContext";
 import AddClient from "./AddClient";
 

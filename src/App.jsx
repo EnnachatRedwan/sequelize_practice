@@ -1,22 +1,21 @@
 import NavBar from "./components/navbar/navbar";
 import ClientsProvider from "../contexts/client/ClientsProvider";
 import ClentsTable from "./components/clients/ClientsTable";
+import { useState } from "react";
+import CarsTable from "./components/cars/CarsTable";
+import CarsProvider from "../contexts/car/CarsProvider";
 
 function App() {
-  // fetch("http://127.0.0.1:3000/client", {
-  //     method: "POST",
-  //     mode: "cors",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ name: "redwan" }),
-  //   })
-  //     .then((result) => console.log(result))
-  //     .catch((err) => console.log(err));
+  const [pageIndex, setPageIndex] = useState(0);
 
+  const setPageIndexHandler = (index) => setPageIndex(index);
   return (
-    <ClientsProvider>
-      <NavBar />
-      <ClentsTable />
-    </ClientsProvider>
+    <CarsProvider>
+      <ClientsProvider>
+        <NavBar indexHandler={setPageIndexHandler} />
+        {pageIndex === 0 ? <ClentsTable /> : <CarsTable />}
+      </ClientsProvider>
+    </CarsProvider>
   );
 }
 

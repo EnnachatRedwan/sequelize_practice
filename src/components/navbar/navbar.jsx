@@ -13,10 +13,10 @@ const NavBar = (props) => {
           id="navbarNavAltMarkup"
         >
           <div className="navbar-nav">
-            <a className="nav-item nav-link " href="#">
+            <a className="nav-item nav-link " href="#" onClick={()=>props.indexHandler(0)}>
               Clients
             </a>
-            <a className="nav-item nav-link" href="#">
+            <a className="nav-item nav-link" href="#" onClick={()=>props.indexHandler(1)}>
               Cars
             </a>
           </div>
