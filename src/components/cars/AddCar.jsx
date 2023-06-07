@@ -1,12 +1,23 @@
 import { useContext, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import carCtx from "../../../contexts/car/carsContext";
+import DropDownFetcher from "../../utils/DropDownFetcher";
+import Alert from "../../portals/alert";
 
 const AddCar = () => {
   const Car = useContext(carCtx);
-  const fullNameRef = useRef();
-  const emailRef = useRef();
+
   const [isEntering, setIsEntering] = useState(false);
+  const [color, setColor] = useState();
+  const [brand, setBrand] = useState();
+  const [type, setType] = useState();
+  const [error, setError] = useState(undefined);
+
+  const plateNumberRef = useRef("");
+
+  const closeAlert = () => {
+    setError(undefined);
+  };
 
   const openForm = () => {
     setIsEntering(true);
@@ -16,51 +27,95 @@ const AddCar = () => {
     setIsEntering(false);
   };
 
-  // const addCarHandler = (event) => {
-  //   if (event) event.preventDefault();
-  //   if (fullNameRef.current.value.trim() === "") return;
-  //   if (emailRef.current.value.trim() === "") return;
-  //   if (
-  //     !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-  //       emailRef.current.value.trim()
-  //     )
-  //   )
-  //     return;
-  //   Car.add(fullNameRef.current.value.trim(), emailRef.current.value.trim());
-  //   fullNameRef.current.value = "";
-  //   emailRef.current.value = "";
-  //   fullNameRef.current.focus();
-  // };
+  const addCarHandler = (event) => {
+    if (event) event.preventDefault();
+    if (plateNumberRef.current.value.trim() === "") return;
+    if (color === undefined) return;
+    if (brand === undefined) return;
+    if (type === undefined) return;
+    try {
+      Car.add(plateNumberRef.current.value, color, brand, type);
+    } catch (err) {
+      setError({ message: err.message });
+    }
+    setColor(undefined);
+    setBrand(undefined);
+    setType(undefined);
+    plateNumberRef.current.value = "";
+    plateNumberRef.current.focus();
+  };
 
   return (
     <tr className="bg-light">
+      {error && (
+        <Alert
+          close={closeAlert}
+          controls={
+            <>
+              <Button variant="primary" onClick={closeAlert}>
+                Okay
+              </Button>
+            </>
+          }
+        >
+          {error.message}
+        </Alert>
+      )}
       {isEntering ? (
         <>
           <th></th>
           <th>
-            <form /*onSubmit={addCarHandler}*/ action="POST">
+            <form onSubmit={addCarHandler} action="POST">
               <input
-                // ref={fullNameRef}
+                ref={plateNumberRef}
                 className="input-group-text"
                 type="text"
-                placeholder="Full name"
+                placeholder="Plate number"
               />
             </form>
           </th>
           <th>
-            <form /*onSubmit={addCarHandler}*/ action="POST">
-              <input
-                // ref={emailRef}
-                className="input-group-text"
-                // type="email"
-                placeholder="email"
+            <form onSubmit={addCarHandler} action="POST">
+              <DropDownFetcher
+                dispValue={"Color"}
+                link={"http://localhost:3000/color"}
+                valName={"id"}
+                dispName={"color"}
+                onChange={setColor}
+                selectedValue={color}
+              />
+            </form>
+          </th>
+          <th>
+            <form onSubmit={addCarHandler} action="POST">
+              <DropDownFetcher
+                dispValue={"Brand"}
+                link={"http://localhost:3000/brand"}
+                valName={"id"}
+                dispName={"Brand"}
+                onChange={setBrand}
+                selectedValue={brand}
+              />
+            </form>
+          </th>
+          <th>
+            <form onSubmit={addCarHandler} action="POST">
+              <DropDownFetcher
+                dispValue={"Type"}
+                link={"http://localhost:3000/type"}
+                valName={"id"}
+                dispName={"Type"}
+                onChange={setType}
+                selectedValue={type}
               />
             </form>
           </th>
           <th></th>
+          <th></th>
+
           <th className="text-center">
             <Button
-              // onClick={addCarHandler}
+              onClick={addCarHandler}
               variant="success"
               className="text-white"
               disabled={Car.isAddLoading}
@@ -75,7 +130,7 @@ const AddCar = () => {
           </th>
         </>
       ) : (
-        <th className="text-center" colSpan={8}>
+        <th className="text-center" colSpan={9}>
           <Button onClick={openForm} variant="success">
             ADD
           </Button>

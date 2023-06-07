@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 import carCtx from "./carsContext";
 
 const CarsProvider = (props) => {
-
-  const [cars, setCars] = useState([{
-    platenumber: "20652-A-1",
-    color: [1, "Black"],
-    type: [2, "SUV"],
-    brand: [1, "Mercedes"],
-  },]);
+  const [cars, setCars] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAddLoading, setIsAddLoading] = useState(false);
 
@@ -17,67 +11,78 @@ const CarsProvider = (props) => {
   }, []);
 
   const fetchCars = () => {
-    // setIsLoading(true);
-    // fetch("http://127.0.0.1:3000/client", {
-    //   method: "GET",
-    //   mode: "cors",
-    // })
-    //   .then((result) => result.json())
-    //   .then((data) => {
-    //     setCars(data);
-    //     setIsLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    setIsLoading(true);
+    fetch("http://127.0.0.1:3000/car", {
+      method: "GET",
+      mode: "cors",
+    })
+      .then((result) => result.json())
+      .then((data) => {
+        setCars(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const addCar = (plateNumber, colorId, brandId,typeId) => {
-    // setIsAddLoading(true);
+  const addCar = (plateNumber, color, brand, type) => {
+    if (
+      cars.filter((car) => car.platenumber.trim() === plateNumber.trim())
+        .length > 0
+    ) {
+      throw new Error(`Car ${plateNumber} already exists`);
+    }
 
-    // fetch("http://127.0.0.1:3000/client", {
-    //   method: "POST",
-    //   mode: "cors",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     fullname: fullname,
-    //     email: email,
-    //   }),
-    // })
-    //   .then((result) => result.json())
-    //   .then((data) => {
-    //     setIsAddLoading(false);
-    //     setCars((oldClients) => [
-    //       ...oldClients,
-    //       { id: data.id, fullname, email },
-    //     ]);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     const oldClients = [...clients];
-    //     oldClients.pop();
-    //     setCars(oldClients);
-    //   });
+    setIsAddLoading(true);
+
+    fetch("http://127.0.0.1:3000/car", {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        plateNumber,
+        color,
+        brand,
+        type,
+      }),
+    })
+      .then((result) => result.json())
+      .then((data) => {
+        setIsAddLoading(false);
+        setCars((oldCars) => [
+          ...oldCars,
+          { platenumber: plateNumber, color, car_brand: brand, car_type: type },
+        ]);
+      })
+      .catch((err) => {
+        console.log(err);
+        const oldCars = [...cars];
+        oldCars.pop();
+        setCars(oldCars);
+      });
   };
 
   const deleteCar = (plateNumber) => {
-    // const oldClients = [...clients];
-    // const updatedClients = oldClients.filter((client) => client.id !== id);
-    // setCars(updatedClients);
-    // fetch(`http://127.0.0.1:3000/client/${id}`, {
-    //   method: "DELETE",
-    // })
-    //   .then((result) => result.json())
-    //   .then((data) => {})
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setCars(oldClients);
-    //   });
+    const oldCars = [...cars];
+
+    const updatedCars = oldCars.filter(
+      (car) => car.platenumber !== plateNumber
+    );
+
+    fetch(`http://127.0.0.1:3000/car/${plateNumber}`, {
+      method: "DELETE",
+    })
+      .then((_) => setCars([...updatedCars]))
+      // .then((data) => {})
+      .catch((err) => {
+        console.log(err);
+        setCars(oldCars);
+      });
   };
 
-  const editCar = (plateNumber, colorId, brandId,typeId) => {
+  const editCar = (plateNumber, colorId, brandId, typeId) => {
     // const oldClients = [...clients];
-
     // const updatedClients = [...clients].map((client) => {
     //   if (client.id === id) {
     //     return {
@@ -88,9 +93,7 @@ const CarsProvider = (props) => {
     //   }
     //   return client;
     // });
-
     // setCars(updatedClients);
-
     // fetch("http://127.0.0.1:3000/client", {
     //   method: "PUT",
     //   mode: "cors",

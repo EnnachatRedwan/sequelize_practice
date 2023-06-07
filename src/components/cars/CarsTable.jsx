@@ -23,7 +23,8 @@ function CarsTable() {
                 <th>Color</th>
                 <th>Brand</th>
                 <th>Type</th>
-                <th className="text-center">Rents</th>
+                <th className="text-center">Rent</th>
+                <th className="text-center">Details</th>
                 <th className="text-center">Edit</th>
                 <th className="text-center">Delete</th>
               </tr>

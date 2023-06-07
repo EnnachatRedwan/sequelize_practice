@@ -6,12 +6,13 @@ import Alert from "../../portals/alert";
 const CarEntry = (props) => {
   const Car = useContext(carCtx);
 
-
   const [isEditing, setIsEditing] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
 
   const [plateNumber, setPlateNumber] = useState(props.car.platenumber);
-  // const [email, setemail] = useState(props.car.email);
+  const [color, setColor] = useState(props.car.color);
+  const [brand, setBrand] = useState(props.car.car_brand);
+  const [type, setType] = useState(props.car.car_type);
 
   // const setPlateNumberHandler = (event) => {
   //   setPlateNumber(event.target.value);
@@ -53,21 +54,15 @@ const CarEntry = (props) => {
           close={closeAlert}
           controls={
             <>
-              <Button
-                variant="danger"
-                // onClick={() => Car.delete(props.car.id)}
-              >
+              <Button variant="danger" onClick={() => Car.delete(plateNumber)}>
                 Okay
               </Button>
-              <Button
-                variant="primary"
-                // onClick={closeAlert}
-              >
+              <Button variant="primary" onClick={closeAlert}>
                 Cancel
               </Button>
             </>
           }
-        >{`You are about to delete ${props.car.platenumber}`}</Alert>
+        >{`You are about to delete ${plateNumber}`}</Alert>
       )}
 
       <td>{props.iteration}</td>
@@ -79,11 +74,11 @@ const CarEntry = (props) => {
               type="text"
               placeholder="Plate number"
               // onChange={setPlateNumberHandler}
-              // value={plateNumber}
+              value={plateNumber}
             />
           </form>
         ) : (
-          props.car.platenumber
+          plateNumber
         )}
       </td>
 
@@ -92,14 +87,14 @@ const CarEntry = (props) => {
           <form /*onSubmit={editCar}*/ action="POST">
             <input
               className="input-group-text"
-              type="email"
-              placeholder="Email"
+              type="text"
+              placeholder="Color"
               // onChange={setEmailHandler}
-              // value={email}
+              value={color.color}
             />
           </form>
         ) : (
-          props.car.color[1]
+          color.color
         )}
       </td>
 
@@ -111,11 +106,11 @@ const CarEntry = (props) => {
               type="text" //shoud be a drop down
               placeholder="Brand"
               // onChange={setEmailHandler}
-              // value={email}
+              value={brand.Brand}
             />
           </form>
         ) : (
-          props.car.brand[1]
+          brand.Brand
         )}
       </td>
 
@@ -127,16 +122,17 @@ const CarEntry = (props) => {
               type="text"
               placeholder="Type"
               // onChange={setEmailHandler}
-              // value={email}
+              value={type.Type}
             />
           </form>
         ) : (
-          props.car.type[1]
+          type.Type
         )}
       </td>
 
       {isEditing ? (
         <>
+          <td></td>
           <td></td>
           <td className="text-center">
             <Button
@@ -157,14 +153,16 @@ const CarEntry = (props) => {
         <>
           <td className="text-center">
             <Button variant="info" className="text-white">
-              Rents
+              Rent
             </Button>
           </td>
           <td className="text-center">
-            <Button
-              /*onClick={openForm}*/ variant="warning"
-              className="text-white"
-            >
+            <Button variant="success" className="text-white">
+              Details
+            </Button>
+          </td>
+          <td className="text-center">
+            <Button onClick={openForm} variant="warning" className="text-white">
               Edit
             </Button>
           </td>

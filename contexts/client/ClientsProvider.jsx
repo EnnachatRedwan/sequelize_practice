@@ -3,7 +3,7 @@ import clientCtx from "./clientsContext";
 
 const ClientsProvider = (props) => {
   const [clients, setClients] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isAddLoading, setIsAddLoading] = useState(false);
 
   useEffect(() => {

@@ -58,6 +58,7 @@ const AddClient = () => {
             </form>
           </th>
           <th></th>
+          
           <th className="text-center">
             <Button
               onClick={addClientHandler}
