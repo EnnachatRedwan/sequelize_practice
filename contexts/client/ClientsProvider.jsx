@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import clientCtx from "./clientsContext";
+import toCamelCase from "../../src/utils/toCamelCase";
 
 const ClientsProvider = (props) => {
   const [clients, setClients] = useState([]);
@@ -34,7 +35,7 @@ const ClientsProvider = (props) => {
       mode: "cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        fullname: fullname,
+        fullname: toCamelCase(fullname),
         email: email,
       }),
     })
@@ -43,7 +44,7 @@ const ClientsProvider = (props) => {
         setIsAddLoading(false);
         setClients((oldClients) => [
           ...oldClients,
-          { id: data.id, fullname, email },
+          { id: data.id, fullname: toCamelCase(fullname), email },
         ]);
       })
       .catch((err) => {
@@ -72,11 +73,11 @@ const ClientsProvider = (props) => {
   const editClient = (id, fullname, email) => {
     const oldClients = [...clients];
 
-    const updatedClients = [...clients].map((client) => {
+    const updatedClients = oldClients.map((client) => {
       if (client.id === id) {
         return {
           id: id,
-          fullname: fullname,
+          fullname: toCamelCase(fullname),
           email: email,
         };
       }
@@ -91,7 +92,7 @@ const ClientsProvider = (props) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         id: id,
-        fullname: fullname,
+        fullname: toCamelCase(fullname),
         email: email,
       }),
     })

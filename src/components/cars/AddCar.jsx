@@ -30,6 +30,8 @@ const AddCar = () => {
   const addCarHandler = (event) => {
     if (event) event.preventDefault();
     if (plateNumberRef.current.value.trim() === "") return;
+    if (!/^\d{1,6}-[a-zA-Z]-\d{1,2}$/.test(plateNumberRef.current.value))
+      return;
     if (color === undefined) return;
     if (brand === undefined) return;
     if (type === undefined) return;

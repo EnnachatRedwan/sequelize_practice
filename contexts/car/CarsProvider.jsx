@@ -41,7 +41,7 @@ const CarsProvider = (props) => {
       mode: "cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        plateNumber,
+        plateNumber: plateNumber.toUpperCase(),
         color,
         brand,
         type,
@@ -52,7 +52,12 @@ const CarsProvider = (props) => {
         setIsAddLoading(false);
         setCars((oldCars) => [
           ...oldCars,
-          { platenumber: plateNumber, color, car_brand: brand, car_type: type },
+          {
+            platenumber: plateNumber.toUpperCase(),
+            color,
+            car_brand: brand,
+            car_type: type,
+          },
         ]);
       })
       .catch((err) => {
@@ -81,37 +86,39 @@ const CarsProvider = (props) => {
       });
   };
 
-  const editCar = (plateNumber, colorId, brandId, typeId) => {
-    // const oldClients = [...clients];
-    // const updatedClients = [...clients].map((client) => {
-    //   if (client.id === id) {
-    //     return {
-    //       id: id,
-    //       fullname: fullname,
-    //       email: email,
-    //     };
-    //   }
-    //   return client;
-    // });
-    // setCars(updatedClients);
-    // fetch("http://127.0.0.1:3000/client", {
-    //   method: "PUT",
-    //   mode: "cors",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     id: id,
-    //     fullname: fullname,
-    //     email: email,
-    //   }),
-    // })
-    //   .then((result) => result.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setCars(oldClients);
-    //   });
+  const editCar = (plateNumber, color, brand, type) => {
+    const oldCars = [...cars];
+    const updatedCars = oldCars.map((car) => {
+      if (car.platenumber === plateNumber) {
+        return {
+          platenumber: plateNumber.toUpperCase(),
+          color,
+          brand,
+          type,
+        };
+      }
+      return car;
+    });
+    setCars(updatedCars);
+    fetch("http://127.0.0.1:3000/car", {
+      method: "PUT",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        plateNumber: plateNumber.toUpperCase(),
+        color,
+        brand,
+        type,
+      }),
+    })
+      // .then((result) => result.json())
+      // .then((data) => {
+      //   console.log(data);
+      // })
+      .catch((err) => {
+        console.log(err);
+        setCars(oldCars);
+      });
   };
 
   return (

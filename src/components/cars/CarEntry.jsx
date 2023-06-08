@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import carCtx from "../../../contexts/car/carsContext";
 import { Button } from "react-bootstrap";
 import Alert from "../../portals/alert";
+import DropDownFetcher from "../../utils/DropDownFetcher";
 
 const CarEntry = (props) => {
   const Car = useContext(carCtx);
@@ -9,17 +10,9 @@ const CarEntry = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
 
-  const [plateNumber, setPlateNumber] = useState(props.car.platenumber);
   const [color, setColor] = useState(props.car.color);
   const [brand, setBrand] = useState(props.car.car_brand);
   const [type, setType] = useState(props.car.car_type);
-
-  // const setPlateNumberHandler = (event) => {
-  //   setPlateNumber(event.target.value);
-  // };
-  // const setEmailHandler = (event) => {
-  //   setemail(event.target.value);
-  // };
 
   const openForm = () => {
     setIsEditing(true);
@@ -37,15 +30,17 @@ const CarEntry = (props) => {
     setIsConfirming(false);
   };
 
-  // const editCar = (event) => {
-  //   if (event) event.preventDefault();
-  //   if (fullName.trim() === "") return;
-  //   if (email.trim() === "") return;
-  //   if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.trim()))
-  //     return;
-  //   Car.edit(props.car.id, fullName.trim(), email.trim());
-  //   closeForm();
-  // };
+  const editCar = (event) => {
+    if (event) event.preventDefault();
+
+    if (color === undefined) return;
+    if (brand === undefined) return;
+    if (type === undefined) return;
+
+    Car.edit(props.car.platenumber, color, brand, type);
+
+    closeForm();
+  };
 
   return (
     <tr style={isEditing ? { backgroundColor: "#aaa" } : {}}>
@@ -54,7 +49,10 @@ const CarEntry = (props) => {
           close={closeAlert}
           controls={
             <>
-              <Button variant="danger" onClick={() => Car.delete(plateNumber)}>
+              <Button
+                variant="danger"
+                onClick={() => Car.delete(props.car.platenumber)}
+              >
                 Okay
               </Button>
               <Button variant="primary" onClick={closeAlert}>
@@ -62,35 +60,35 @@ const CarEntry = (props) => {
               </Button>
             </>
           }
-        >{`You are about to delete ${plateNumber}`}</Alert>
+        >{`You are about to delete ${props.car.platenumber}`}</Alert>
       )}
 
       <td>{props.iteration}</td>
       <td>
         {isEditing ? (
-          <form /*onSubmit={editCar}*/ action="POST">
+          <form onSubmit={editCar} action="POST">
             <input
+              disabled={true}
               className="input-group-text"
               type="text"
-              placeholder="Plate number"
-              // onChange={setPlateNumberHandler}
-              value={plateNumber}
+              value={props.car.platenumber}
             />
           </form>
         ) : (
-          plateNumber
+          props.car.platenumber
         )}
       </td>
 
       <td>
         {isEditing ? (
-          <form /*onSubmit={editCar}*/ action="POST">
-            <input
-              className="input-group-text"
-              type="text"
-              placeholder="Color"
-              // onChange={setEmailHandler}
-              value={color.color}
+          <form onSubmit={editCar} action="POST">
+            <DropDownFetcher
+              dispValue={"Color"}
+              link={"http://localhost:3000/color"}
+              valName={"id"}
+              dispName={"color"}
+              onChange={setColor}
+              selectedValue={color.id}
             />
           </form>
         ) : (
@@ -100,13 +98,14 @@ const CarEntry = (props) => {
 
       <td>
         {isEditing ? (
-          <form /*onSubmit={editCar}*/ action="POST">
-            <input
-              className="input-group-text"
-              type="text" //shoud be a drop down
-              placeholder="Brand"
-              // onChange={setEmailHandler}
-              value={brand.Brand}
+          <form onSubmit={editCar} action="POST">
+            <DropDownFetcher
+              dispValue={"Brand"}
+              link={"http://localhost:3000/brand"}
+              valName={"id"}
+              dispName={"Brand"}
+              onChange={setBrand}
+              selectedValue={brand.id}
             />
           </form>
         ) : (
@@ -116,13 +115,14 @@ const CarEntry = (props) => {
 
       <td>
         {isEditing ? (
-          <form /*onSubmit={editCar}*/ action="POST">
-            <input
-              className="input-group-text"
-              type="text"
-              placeholder="Type"
-              // onChange={setEmailHandler}
-              value={type.Type}
+          <form onSubmit={editCar} action="POST">
+            <DropDownFetcher
+              dispValue={"Type"}
+              link={"http://localhost:3000/type"}
+              valName={"id"}
+              dispName={"Type"}
+              onChange={setType}
+              selectedValue={type.id}
             />
           </form>
         ) : (
@@ -135,11 +135,7 @@ const CarEntry = (props) => {
           <td></td>
           <td></td>
           <td className="text-center">
-            <Button
-              // onClick={editCar}
-              variant="success"
-              className="text-white"
-            >
+            <Button onClick={editCar} variant="success" className="text-white">
               Save
             </Button>
           </td>

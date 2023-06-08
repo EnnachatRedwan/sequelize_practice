@@ -20,13 +20,17 @@ const AddClient = () => {
     if (event) event.preventDefault();
     if (fullNameRef.current.value.trim() === "") return;
     if (emailRef.current.value.trim() === "") return;
+    if (!/^[A-Za-z]+(?:\s[A-Za-z]+)+$/.test(fullNameRef.current.value)) return;
     if (
       !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
         emailRef.current.value.trim()
       )
     )
       return;
-    Client.add(fullNameRef.current.value.trim(), emailRef.current.value.trim());
+    Client.add(
+      fullNameRef.current.value.trim(),
+      emailRef.current.value.trim()
+    );
     fullNameRef.current.value = "";
     emailRef.current.value = "";
     fullNameRef.current.focus();
@@ -58,7 +62,7 @@ const AddClient = () => {
             </form>
           </th>
           <th></th>
-          
+
           <th className="text-center">
             <Button
               onClick={addClientHandler}
