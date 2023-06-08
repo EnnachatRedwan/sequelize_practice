@@ -1,0 +1,20 @@
+.navbar {
+  height: 60px;
+  background-color: #212529;
+  color: white;
+}
+
+.navbar .logo{
+    font-size: 1.7rem;
+    padding: 10px 20px;
+}
+
+.navbar .logo span:nth-child(1){
+    color: #5bc0de;
+}
+.navbar .logo span:nth-child(2){
+    color: #f0ad4e;
+}
+.navbar .logo span:nth-child(3){
+    color: #d9534f;
+}

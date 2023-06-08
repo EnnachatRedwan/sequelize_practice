@@ -1,0 +1,19 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 60px;
+  cursor: pointer;
+  padding: 20px 40px;
+}
+
+.item:hover{
+    background-color: #2e3439;
+}
+
+.item h1{
+    font-size: 1.4rem;
+}
+i {
+  font-size: 1.9rem;
+}
