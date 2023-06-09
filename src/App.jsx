@@ -19,39 +19,44 @@ function App() {
   }, []);
 
   const setPageIndexHandler = (index) => {
-    console.log("clicked");
     localStorage.setItem("pageIndex", index);
     setPageIndex(index);
   };
 
   const sideBarItem = [
     {
-      title: "Clients",
-      iconClass: "bi bi-person-fill",
+      title: "Dashboard",
+      iconClass: "bi bi-speedometer",
       iconColor: "#5bc0de",
       clickHandler: () => setPageIndexHandler("0"),
     },
     {
-      title: "Cars",
-      iconClass: "bi bi-car-front-fill",
+      title: "Clients",
+      iconClass: "bi bi-person-fill",
       iconColor: "#f0ad4e",
       clickHandler: () => setPageIndexHandler("1"),
     },
     {
+      title: "Cars",
+      iconClass: "bi bi-car-front-fill",
+      iconColor: "#d9534f",
+      clickHandler: () => setPageIndexHandler("2"),
+    },
+    {
       title: "Settings",
       iconClass: "bi bi-gear-fill",
-      iconColor: "#d9534f ",
-      clickHandler: () => setPageIndexHandler("1"),
+      iconColor: "#5cb85c",
+      clickHandler: () => setPageIndexHandler("3"),
     },
   ];
 
   return (
     <CarsProvider>
       <ClientsProvider>
-        <NavBar indexHandler={setPageIndexHandler} />
+        <NavBar />
         <div className={styles["main-container"]}>
-          <SideBar items={sideBarItem} />
-          <main>{pageIndex === "0" ? <ClentsTable /> : <CarsTable />}</main>
+          <SideBar items={sideBarItem} selectedItemIndex={pageIndex} />
+          <main>{pageIndex === "1" ? <ClentsTable /> : <CarsTable />}</main>
         </div>
       </ClientsProvider>
     </CarsProvider>

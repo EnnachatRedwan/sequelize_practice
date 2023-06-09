@@ -7,10 +7,7 @@ function CarsTable() {
   const Car = useContext(carCtx);
 
   return (
-    <div
-      className="mt-3 container-lg"
-      style={{ overflowX: "scroll", scrollbarWidth: "none" }}
-    >
+    <div style={{ overflowX: "scroll", scrollbarWidth: "none" }}>
       {Car.isLoading && <h1 className="text-center lead m-5">Loading...</h1>}
       {!Car.isLoading && (
         <table className="table table-striped">

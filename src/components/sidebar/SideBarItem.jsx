@@ -2,13 +2,24 @@ import styles from "./SideBarItem.module.css";
 
 const SideBarItem = (props) => {
   return (
-    <div className={styles["item"]} onClick={props.item.clickHandler}>
-      <i
-        className={props.item.iconClass}
-        style={{ color: props.item.iconColor }}
-      ></i>
-      <h1>{props.item.title}</h1>
-    </div>
+    <label className={styles["label"]} htmlFor={`tab${props.iteration}`}>
+      <input
+        readOnly
+        id={`tab${props.iteration}`}
+        type="radio"
+        name="selected-tab"
+        className={styles["radio"]}
+        checked={props.selected}
+      />
+      <div className={styles["item"]} onClick={props.item.clickHandler}>
+        <i
+          className={props.item.iconClass}
+          style={{ color: props.item.iconColor }}
+        ></i>
+        <h1>{props.item.title}</h1>
+      </div>
+      <span />
+    </label>
   );
 };
 

@@ -1,6 +1,6 @@
 import styles from "./navbar.module.css";
 
-const NavBar = (props) => {
+const NavBar = () => {
   return (
     <nav className={styles["navbar"]}>
       <div className={styles["logo"]}>

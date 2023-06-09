@@ -7,14 +7,11 @@ function ClentsTable() {
   const Client = useContext(clientCtx);
 
   return (
-    <div
-      className="mt-3 container-lg"
-      style={{ overflowX: "scroll", scrollbarWidth: "none" }}
-    >
+    <div style={{ overflow: "scroll", scrollbarWidth: "none", height: "100%" }}>
       {Client.isLoading && <h1 className="text-center lead m-5">Loading...</h1>}
       {!Client.isLoading && (
         <table className="table table-striped">
-          <thead>
+          <thead style={{ position: "sticky", left: "0", top: "0" }}>
             <AddClient />
             {Client.clients.length > 0 && (
               <tr className="table-dark">

@@ -1,19 +1,87 @@
+.label {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
 .item {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 10px;
   height: 60px;
   cursor: pointer;
   padding: 20px 40px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
 }
 
-.item:hover{
-    background-color: #2e3439;
+.item:hover {
+  background-color: #2e3439;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  z-index: 1000;
 }
 
-.item h1{
-    font-size: 1.4rem;
+.item h1 {
+  font-size: 1.4rem;
 }
 i {
   font-size: 1.9rem;
+}
+
+.radio {
+  display: none;
+}
+
+.radio:checked ~ .item {
+  background-color: #fff;
+  color: #000;
+}
+.radio:checked ~ .item:hover {
+  background-color: #fff;
+  color: #000;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.radio:checked ~ .item::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -20px;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+}
+
+.radio:checked ~ span::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -20px;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+}
+
+.radio:checked ~ .item::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -20px;
+  height: 20px;
+  width: 20px;
+  background-color: #212529;
+  border-bottom-right-radius: 30px;
+}
+.radio:checked ~ span::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -20px;
+  height: 20px;
+  width: 20px;
+  background-color: #212529;
+  border-top-right-radius: 30px;
 }
