@@ -12,6 +12,7 @@ const AddCar = () => {
   const [brand, setBrand] = useState();
   const [type, setType] = useState();
   const [error, setError] = useState(undefined);
+  const [isSearching, setIsSearching] = useState(false);
 
   const plateNumberRef = useRef("");
 
@@ -25,6 +26,14 @@ const AddCar = () => {
 
   const closeForm = () => {
     setIsEntering(false);
+  };
+
+  const openSearch = () => {
+    setIsSearching(true);
+  };
+
+  const closeSearch = () => {
+    setIsSearching(false);
   };
 
   const addCarHandler = (event) => {
@@ -63,7 +72,7 @@ const AddCar = () => {
           {error.message}
         </Alert>
       )}
-      {isEntering ? (
+      {isEntering && (
         <>
           <th></th>
           <th>
@@ -131,10 +140,45 @@ const AddCar = () => {
             </Button>
           </th>
         </>
-      ) : (
+      )}
+      {isSearching && (
+        <>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th colSpan={2}>
+            <form action="POST">
+              <input
+                style={{ width: "100%" }}
+                className="input-group-text"
+                type="text"
+                placeholder="Plate number"
+              />
+            </form>
+          </th>
+
+          <th></th>
+          <th></th>
+          <th className="text-center">
+            <Button onClick={closeSearch} variant="danger" className="">
+              Close
+            </Button>
+          </th>
+        </>
+      )}
+      {!isEntering && !isSearching && (
         <th className="text-center" colSpan={9}>
-          <Button onClick={openForm} variant="success">
+          <Button onClick={openForm} className="m-1" variant="success">
             ADD
+          </Button>
+
+          <Button
+            onClick={openSearch}
+            variant="warning"
+            className="text-white m-1"
+          >
+            Search
           </Button>
         </th>
       )}

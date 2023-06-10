@@ -16,7 +16,7 @@ const SideBarItem = (props) => {
           className={props.item.iconClass}
           style={{ color: props.item.iconColor }}
         ></i>
-        <h1>{props.item.title}</h1>
+        {!props.isCollapsed && <h1>{props.item.title}</h1>}
       </div>
       <span />
     </label>

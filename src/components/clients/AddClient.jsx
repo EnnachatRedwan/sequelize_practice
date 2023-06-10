@@ -7,6 +7,7 @@ const AddClient = () => {
   const fullNameRef = useRef();
   const emailRef = useRef();
   const [isEntering, setIsEntering] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
 
   const openForm = () => {
     setIsEntering(true);
@@ -14,6 +15,14 @@ const AddClient = () => {
 
   const closeForm = () => {
     setIsEntering(false);
+  };
+
+  const openSearch = () => {
+    setIsSearching(true);
+  };
+
+  const closeSearch = () => {
+    setIsSearching(false);
   };
 
   const addClientHandler = (event) => {
@@ -27,10 +36,7 @@ const AddClient = () => {
       )
     )
       return;
-    Client.add(
-      fullNameRef.current.value.trim(),
-      emailRef.current.value.trim()
-    );
+    Client.add(fullNameRef.current.value.trim(), emailRef.current.value.trim());
     fullNameRef.current.value = "";
     emailRef.current.value = "";
     fullNameRef.current.focus();
@@ -38,7 +44,7 @@ const AddClient = () => {
 
   return (
     <tr className="bg-light">
-      {isEntering ? (
+      {isEntering && (
         <>
           <th></th>
           <th>
@@ -79,12 +85,48 @@ const AddClient = () => {
             </Button>
           </th>
         </>
-      ) : (
-        <th className="text-center" colSpan={6}>
-          <Button onClick={openForm} variant="success">
-            ADD
-          </Button>
-        </th>
+      )}
+
+      {isSearching && (
+        <>
+          <th></th>
+          <th></th>
+          <th colSpan={2}>
+            <form onSubmit={} action="POST">
+              <input
+              style={{width:"100%"}}
+                ref={fullNameRef}
+                className="input-group-text"
+                type="text"
+                placeholder="Full name or Email"
+              />
+            </form>
+          </th>
+          <th></th>
+          <th className="text-center">
+            <Button onClick={closeSearch} variant="danger" className="">
+              Close
+            </Button>
+          </th>
+        </>
+      )}
+
+      {!isEntering && !isSearching && (
+        <>
+          <th className="text-center" colSpan={6}>
+            <Button onClick={openForm} className="m-1" variant="success">
+              ADD
+            </Button>
+
+            <Button
+              onClick={openSearch}
+              variant="warning"
+              className="text-white m-1"
+            >
+              Search
+            </Button>
+          </th>
+        </>
       )}
     </tr>
   );
