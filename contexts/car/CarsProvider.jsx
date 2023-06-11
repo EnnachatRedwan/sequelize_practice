@@ -3,8 +3,10 @@ import carCtx from "./carsContext";
 
 const CarsProvider = (props) => {
   const [cars, setCars] = useState([]);
+  const [searchedCars, setSearchedCars] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAddLoading, setIsAddLoading] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     fetchCars();
@@ -121,16 +123,34 @@ const CarsProvider = (props) => {
       });
   };
 
+  const search = (key) => {
+    if (key.trim() === "") {
+      setSearchedCars([]);
+      setIsSearching(false);
+      return;
+    }
+    setIsSearching(true);
+
+    const filtredCars = [...cars].filter((car) =>
+      car.platenumber.trim().toLowerCase().includes(key.trim().toLowerCase())
+    );
+
+    setSearchedCars(filtredCars);
+  };
+
   return (
     <carCtx.Provider
       value={{
         cars: cars,
+        searchedCars: searchedCars,
         isLoading: isLoading,
         isAddLoading: isAddLoading,
+        isSearching: isSearching,
         fetch: fetchCars,
         add: addCar,
         edit: editCar,
         delete: deleteCar,
+        search: search,
       }}
     >
       {props.children}

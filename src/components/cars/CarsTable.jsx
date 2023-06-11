@@ -28,9 +28,13 @@ function CarsTable() {
             )}
           </thead>
           <tbody>
-            {Car.cars.map((car, i) => (
-              <CarEntry key={i} iteration={i + 1} car={car} />
-            ))}
+            {Car.isSearching
+              ? Car.searchedCars.map((car, i) => (
+                  <CarEntry key={"search" + i} iteration={i + 1} car={car} />
+                ))
+              : Car.cars.map((car, i) => (
+                  <CarEntry key={i} iteration={i + 1} car={car} />
+                ))}
           </tbody>
           <tfoot></tfoot>
         </table>

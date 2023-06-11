@@ -154,6 +154,7 @@ const AddCar = () => {
                 className="input-group-text"
                 type="text"
                 placeholder="Plate number"
+                onChange={(event) => Car.search(event.target.value)}
               />
             </form>
           </th>
@@ -161,7 +162,13 @@ const AddCar = () => {
           <th></th>
           <th></th>
           <th className="text-center">
-            <Button onClick={closeSearch} variant="danger" className="">
+            <Button
+              onClick={() => {
+                closeSearch();
+                Car.search("");
+              }}
+              variant="danger"
+            >
               Close
             </Button>
           </th>

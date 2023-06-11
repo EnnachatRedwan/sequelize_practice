@@ -4,8 +4,10 @@ import toCamelCase from "../../src/utils/toCamelCase";
 
 const ClientsProvider = (props) => {
   const [clients, setClients] = useState([]);
+  const [searchedClients, setSearchedClients] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAddLoading, setIsAddLoading] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     fetchClients();
@@ -62,8 +64,8 @@ const ClientsProvider = (props) => {
     fetch(`http://127.0.0.1:3000/client/${id}`, {
       method: "DELETE",
     })
-      .then((result) => result.json())
-      .then((data) => {})
+      // .then((result) => result.json())
+      // .then((data) => {})
       .catch((err) => {
         console.log(err);
         setClients(oldClients);
@@ -106,16 +108,38 @@ const ClientsProvider = (props) => {
       });
   };
 
+  const search = (key) => {
+    if (key.trim() === "") {
+      setSearchedClients([]);
+      setIsSearching(false);
+      return;
+    }
+    setIsSearching(true);
+    setSearchedClients(
+      [...clients].filter(
+        (client) =>
+          client.fullname
+            .trim()
+            .toLowerCase()
+            .includes(key.trim().toLowerCase()) ||
+          client.email.trim().toLowerCase().includes(key.trim().toLowerCase())
+      )
+    );
+  };
+
   return (
     <clientCtx.Provider
       value={{
         clients: clients,
+        searchedClients: searchedClients,
         isLoading: isLoading,
         isAddLoading: isAddLoading,
+        isSearching: isSearching,
         fetch: fetchClients,
         add: addClient,
         edit: editClient,
         delete: deleteClient,
+        search: search,
       }}
     >
       {props.children}

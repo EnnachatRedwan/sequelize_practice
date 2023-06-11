@@ -92,19 +92,26 @@ const AddClient = () => {
           <th></th>
           <th></th>
           <th colSpan={2}>
-            <form onSubmit={} action="POST">
+            <form action="POST">
               <input
-              style={{width:"100%"}}
-                ref={fullNameRef}
+                style={{ width: "100%" }}
                 className="input-group-text"
                 type="text"
                 placeholder="Full name or Email"
+                onChange={(event) => Client.search(event.target.value)}
               />
             </form>
           </th>
           <th></th>
           <th className="text-center">
-            <Button onClick={closeSearch} variant="danger" className="">
+            <Button
+              onClick={() => {
+                closeSearch();
+                Client.search("");
+              }}
+              variant="danger"
+              className=""
+            >
               Close
             </Button>
           </th>

@@ -25,9 +25,17 @@ function ClentsTable() {
             )}
           </thead>
           <tbody>
-            {Client.clients.map((client, i) => (
-              <ClientEntry key={i} iteration={i + 1} client={client} />
-            ))}
+            {Client.isSearching
+              ? Client.searchedClients.map((client, i) => (
+                  <ClientEntry
+                    key={"search" + i}
+                    iteration={i + 1}
+                    client={client}
+                  />
+                ))
+              : Client.clients.map((client, i) => (
+                  <ClientEntry key={i} iteration={i + 1} client={client} />
+                ))}
           </tbody>
           <tfoot></tfoot>
         </table>
