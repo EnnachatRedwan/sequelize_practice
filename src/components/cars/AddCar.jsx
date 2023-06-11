@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import carCtx from "../../../contexts/car/carsContext";
 import DropDownFetcher from "../../utils/DropDownFetcher";
@@ -13,6 +13,8 @@ const AddCar = () => {
   const [type, setType] = useState();
   const [error, setError] = useState(undefined);
   const [isSearching, setIsSearching] = useState(false);
+
+  useEffect(() => Car.search(""), []);
 
   const plateNumberRef = useRef("");
 

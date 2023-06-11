@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import clientCtx from "../../../contexts/client/clientsContext";
 
@@ -8,6 +8,8 @@ const AddClient = () => {
   const emailRef = useRef();
   const [isEntering, setIsEntering] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+
+  useEffect(() => Client.search(""), []);
 
   const openForm = () => {
     setIsEntering(true);
