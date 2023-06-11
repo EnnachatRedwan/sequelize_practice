@@ -152,11 +152,7 @@ const CarEntry = (props) => {
               Rent
             </Button>
           </td>
-          <td className="text-center">
-            <Button variant="success" className="text-white">
-              Details
-            </Button>
-          </td>
+
           <td className="text-center">
             <Button onClick={openForm} variant="warning" className="text-white">
               Edit

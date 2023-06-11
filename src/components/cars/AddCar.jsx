@@ -124,7 +124,6 @@ const AddCar = () => {
             </form>
           </th>
           <th></th>
-          <th></th>
 
           <th className="text-center">
             <Button
@@ -145,7 +144,6 @@ const AddCar = () => {
       )}
       {isSearching && (
         <>
-          <th></th>
           <th></th>
           <th></th>
           <th></th>
