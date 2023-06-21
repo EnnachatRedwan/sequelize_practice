@@ -12,6 +12,8 @@ const ClientEntry = (props) => {
   const [fullName, setFullName] = useState(props.client.fullname);
   const [email, setemail] = useState(props.client.email);
 
+  console.log(fullName, email);
+
   const setFullNameHandler = (event) => {
     setFullName(event.target.value);
   };

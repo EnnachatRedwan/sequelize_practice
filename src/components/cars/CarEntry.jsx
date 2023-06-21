@@ -88,11 +88,11 @@ const CarEntry = (props) => {
               valName={"id"}
               dispName={"color"}
               onChange={setColor}
-              selectedValue={color.id}
+              selectedValue={props.car.color.id}
             />
           </form>
         ) : (
-          color.color
+          props.car.color.color
         )}
       </td>
 
@@ -105,11 +105,11 @@ const CarEntry = (props) => {
               valName={"id"}
               dispName={"Brand"}
               onChange={setBrand}
-              selectedValue={brand.id}
+              selectedValue={props.car.car_brand.id}
             />
           </form>
         ) : (
-          brand.Brand
+          props.car.car_brand.Brand
         )}
       </td>
 
@@ -122,17 +122,16 @@ const CarEntry = (props) => {
               valName={"id"}
               dispName={"Type"}
               onChange={setType}
-              selectedValue={type.id}
+              selectedValue={props.car.car_type.id}
             />
           </form>
         ) : (
-          type.Type
+          props.car.car_type.Type
         )}
       </td>
 
       {isEditing ? (
         <>
-          <td></td>
           <td></td>
           <td className="text-center">
             <Button onClick={editCar} variant="success" className="text-white">

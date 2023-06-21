@@ -95,8 +95,8 @@ const CarsProvider = (props) => {
         return {
           platenumber: plateNumber.toUpperCase(),
           color,
-          brand,
-          type,
+          car_brand: brand,
+          car_type: type,
         };
       }
       return car;

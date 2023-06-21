@@ -5,6 +5,7 @@ import ClentsTable from "./components/clients/ClientsTable";
 import CarsTable from "./components/cars/CarsTable";
 import CarsProvider from "../contexts/car/CarsProvider";
 import SideBar from "./components/sidebar/SideBar";
+import Dashboard from "./components/dashboard/Dashboard";
 
 import styles from "./app.module.css";
 
@@ -50,13 +51,20 @@ function App() {
     },
   ];
 
+  const currentPage = (pI) => {
+    if (pI === "0") return <Dashboard />;
+    if (pI === "1") return <ClentsTable />;
+    if (pI === "2") return <CarsTable />;
+    if (pI === "3") return <></>;
+  };
+
   return (
     <CarsProvider>
       <ClientsProvider>
         <NavBar />
         <div className={styles["main-container"]}>
           <SideBar items={sideBarItem} selectedItemIndex={pageIndex} />
-          <main>{pageIndex === "1" ? <ClentsTable /> : <CarsTable />}</main>
+          <main>{currentPage(pageIndex)}</main>
         </div>
       </ClientsProvider>
     </CarsProvider>
