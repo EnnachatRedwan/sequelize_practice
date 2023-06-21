@@ -131,8 +131,24 @@ const CarsProvider = (props) => {
     }
     setIsSearching(true);
 
-    const filtredCars = [...cars].filter((car) =>
-      car.platenumber.trim().toLowerCase().includes(key.trim().toLowerCase())
+    const filtredCars = [...cars].filter(
+      (car) =>
+        car.platenumber
+          .trim()
+          .toLowerCase()
+          .includes(key.trim().toLowerCase()) ||
+        car.color.color
+          .trim()
+          .toLowerCase()
+          .includes(key.trim().toLowerCase()) ||
+        car.car_brand.Brand
+          .trim()
+          .toLowerCase()
+          .includes(key.trim().toLowerCase()) ||
+        car.car_type.Type
+          .trim()
+          .toLowerCase()
+          .includes(key.trim().toLowerCase())
     );
 
     setSearchedCars(filtredCars);

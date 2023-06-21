@@ -153,7 +153,7 @@ const AddCar = () => {
                 style={{ width: "100%" }}
                 className="input-group-text"
                 type="text"
-                placeholder="Plate number"
+                placeholder="Plate number / Color / Brand / Type"
                 onChange={(event) => Car.search(event.target.value)}
               />
             </form>
