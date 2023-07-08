@@ -3,12 +3,15 @@ import carCtx from "../../../contexts/car/carsContext";
 import { Button } from "react-bootstrap";
 import Alert from "../../portals/alert";
 import DropDownFetcher from "../../utils/DropDownFetcher";
+import ClientsList from "../clients/clientsAlertList/ClientsList";
+import Popup from "../../portals/popup";
 
 const CarEntry = (props) => {
   const Car = useContext(carCtx);
 
   const [isEditing, setIsEditing] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
+  const [isRenting, setIsRenting] = useState(false);
 
   const [color, setColor] = useState(props.car.color);
   const [brand, setBrand] = useState(props.car.car_brand);
@@ -28,6 +31,14 @@ const CarEntry = (props) => {
 
   const closeAlert = () => {
     setIsConfirming(false);
+  };
+
+  const openRentAlert = () => {
+    setIsRenting(true);
+  };
+
+  const closeRentAlert = () => {
+    setIsRenting(false);
   };
 
   const editCar = (event) => {
@@ -61,6 +72,12 @@ const CarEntry = (props) => {
             </>
           }
         >{`You are about to delete ${props.car.platenumber}`}</Alert>
+      )}
+
+      {isRenting && (
+        <Popup close={closeRentAlert} title={"Clients"}>
+          <ClientsList />
+        </Popup>
       )}
 
       <td>{props.iteration}</td>
@@ -147,7 +164,11 @@ const CarEntry = (props) => {
       ) : (
         <>
           <td className="text-center">
-            <Button variant="info" className="text-white">
+            <Button
+              onClick={openRentAlert}
+              variant="info"
+              className="text-white"
+            >
               Rent
             </Button>
           </td>
