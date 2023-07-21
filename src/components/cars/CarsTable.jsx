@@ -17,6 +17,7 @@ function CarsTable() {
               <tr className="table-dark">
                 <th>#</th>
                 <th>Plate number</th>
+                <th>Day Price</th>
                 <th>Color</th>
                 <th>Brand</th>
                 <th>Type</th>

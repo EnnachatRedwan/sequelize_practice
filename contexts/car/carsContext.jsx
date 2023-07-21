@@ -5,8 +5,8 @@ const carCtx = React.createContext({
   isLoading: false,
   isAddLoading: false,
   fetch: () => {},
-  add: (plateNumber, colorId, brandId, typeId) => {},
-  edit: (plateNumber, colorId, brandId, typeId) => {},
+  add: (plateNumber, pricePerDay, colorId, brandId, typeId) => {},
+  edit: (plateNumber, pricePerDay, colorId, brandId, typeId) => {},
   delete: (plateNumber) => {},
   search: (key) => {},
 });

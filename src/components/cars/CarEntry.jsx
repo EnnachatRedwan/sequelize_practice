@@ -13,9 +13,14 @@ const CarEntry = (props) => {
   const [isConfirming, setIsConfirming] = useState(false);
   const [isRenting, setIsRenting] = useState(false);
 
+  const [pricePerDay, setPricePerDay] = useState(props.car.pricePerDay);
   const [color, setColor] = useState(props.car.color);
   const [brand, setBrand] = useState(props.car.car_brand);
   const [type, setType] = useState(props.car.car_type);
+
+  const setCarPricePerDayHandler = (event) => {
+    setPricePerDay(event.target.value);
+  };
 
   const openForm = () => {
     setIsEditing(true);
@@ -48,7 +53,7 @@ const CarEntry = (props) => {
     if (brand === undefined) return;
     if (type === undefined) return;
 
-    Car.edit(props.car.platenumber, color, brand, type);
+    Car.edit(props.car.platenumber, pricePerDay, color, brand, type);
 
     closeForm();
   };
@@ -76,7 +81,7 @@ const CarEntry = (props) => {
 
       {isRenting && (
         <Popup close={closeRentAlert} title={"Clients"}>
-          <ClientsList />
+          <ClientsList car={props.car} />
         </Popup>
       )}
 
@@ -93,6 +98,21 @@ const CarEntry = (props) => {
           </form>
         ) : (
           props.car.platenumber
+        )}
+      </td>
+
+      <td>
+        {isEditing ? (
+          <form onSubmit={editCar} action="POST">
+            <input
+              className="input-group-text"
+              type="text"
+              value={pricePerDay}
+              onChange={setCarPricePerDayHandler}
+            />
+          </form>
+        ) : (
+          props.car.pricePerDay
         )}
       </td>
 

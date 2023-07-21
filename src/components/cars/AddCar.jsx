@@ -17,6 +17,7 @@ const AddCar = () => {
   useEffect(() => Car.search(""), []);
 
   const plateNumberRef = useRef("");
+  const pricePerDayRef = useRef(1);
 
   const closeAlert = () => {
     setError(undefined);
@@ -41,13 +42,20 @@ const AddCar = () => {
   const addCarHandler = (event) => {
     if (event) event.preventDefault();
     if (plateNumberRef.current.value.trim() === "") return;
+    if (Number(pricePerDayRef.current.value) <= 0) return;
     if (!/^\d{1,6}-[a-zA-Z]-\d{1,2}$/.test(plateNumberRef.current.value))
       return;
     if (color === undefined) return;
     if (brand === undefined) return;
     if (type === undefined) return;
     try {
-      Car.add(plateNumberRef.current.value, color, brand, type);
+      Car.add(
+        plateNumberRef.current.value,
+        Number(pricePerDayRef.current.value),
+        color,
+        brand,
+        type
+      );
     } catch (err) {
       setError({ message: err.message });
     }
@@ -55,6 +63,7 @@ const AddCar = () => {
     setBrand(undefined);
     setType(undefined);
     plateNumberRef.current.value = "";
+    pricePerDayRef.current.value = "";
     plateNumberRef.current.focus();
   };
 
@@ -76,7 +85,7 @@ const AddCar = () => {
       )}
       {isEntering && (
         <>
-          <th></th>
+        <th></th>
           <th>
             <form onSubmit={addCarHandler} action="POST">
               <input
@@ -84,6 +93,17 @@ const AddCar = () => {
                 className="input-group-text"
                 type="text"
                 placeholder="Plate number"
+              />
+            </form>
+          </th>
+          <th>
+            <form onSubmit={addCarHandler} action="POST">
+              <input
+                ref={pricePerDayRef}
+                className="input-group-text"
+                type="number"
+                min="1"
+                placeholder="Price per day"
               />
             </form>
           </th>
@@ -159,6 +179,7 @@ const AddCar = () => {
             </form>
           </th>
 
+          <th></th>
           <th></th>
           <th></th>
           <th className="text-center">

@@ -28,7 +28,7 @@ const CarsProvider = (props) => {
       });
   };
 
-  const addCar = (plateNumber, color, brand, type) => {
+  const addCar = (plateNumber, pricePerDay, color, brand, type) => {
     if (
       cars.filter((car) => car.platenumber.trim() === plateNumber.trim())
         .length > 0
@@ -44,6 +44,7 @@ const CarsProvider = (props) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         plateNumber: plateNumber.toUpperCase(),
+        pricePerDay,
         color,
         brand,
         type,
@@ -88,12 +89,13 @@ const CarsProvider = (props) => {
       });
   };
 
-  const editCar = (plateNumber, color, brand, type) => {
+  const editCar = (plateNumber, pricePerDay, color, brand, type) => {
     const oldCars = [...cars];
     const updatedCars = oldCars.map((car) => {
       if (car.platenumber === plateNumber) {
         return {
           platenumber: plateNumber.toUpperCase(),
+          pricePerDay,
           color,
           car_brand: brand,
           car_type: type,
@@ -108,6 +110,7 @@ const CarsProvider = (props) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         plateNumber: plateNumber.toUpperCase(),
+        pricePerDay,
         color,
         brand,
         type,
@@ -141,12 +144,10 @@ const CarsProvider = (props) => {
           .trim()
           .toLowerCase()
           .includes(key.trim().toLowerCase()) ||
-        car.car_brand.Brand
-          .trim()
+        car.car_brand.Brand.trim()
           .toLowerCase()
           .includes(key.trim().toLowerCase()) ||
-        car.car_type.Type
-          .trim()
+        car.car_type.Type.trim()
           .toLowerCase()
           .includes(key.trim().toLowerCase())
     );

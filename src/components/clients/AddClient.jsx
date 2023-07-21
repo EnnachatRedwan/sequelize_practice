@@ -93,7 +93,7 @@ const AddClient = () => {
         <>
           <th></th>
           <th></th>
-          <th colSpan={2}>
+          <th>
             <form action="POST">
               <input
                 style={{ width: "100%" }}
@@ -104,6 +104,7 @@ const AddClient = () => {
               />
             </form>
           </th>
+          <th></th>
           <th></th>
           <th className="text-center">
             <Button
